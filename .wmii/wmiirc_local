@@ -1,0 +1,305 @@
+#!/bin/bash -f
+# vim: set filetype=sh :
+# Configuration variables
+export MODKEY=Mod4
+
+# Colours tuples: "<text> <background> <border>"
+export WMII_URGENTCOLORS='#deb1a0 #840000 #2a0000'
+export WMII_NOTICECOLORS='#feffef #808808 #303303'
+export WMII_FOCUSCOLORS='#ffffff #1d4000 #133700'
+export WMII_NORMCOLORS='#f0f0f0 #050f1a #001337'
+export WMII_BACKGROUND='#050d40'
+export WMII_FONT='fixed'
+
+# Status Bar info augmented with battery status and volume:
+# Battery status:
+check_battery() {
+    C_now=$(cat /sys/class/power_supply/BAT0/energy_now)
+    C_full=$(cat /sys/class/power_supply/BAT0/energy_full)
+
+    echo $((100*$C_now/$C_full))
+}
+
+battery_status() {
+    b=$(check_battery)
+
+    if [ $(cat /sys/class/power_supply/AC/online) = 1 ];
+    then
+        C_status='>'
+    else
+        C_status='<'
+    fi
+
+    if [ $b -lt 17 ];
+    then
+        B_col=$WMII_URGENTCOLORS
+    elif [ $b -le 33 ];
+    then
+        B_col=$WMII_NOTICECOLORS
+    else
+        B_col=$WMII_FOCUSCOLORS
+    fi
+
+    echo $B_col 'BAT: '$C_status$b'%'
+}
+
+# Volume status:
+get_volume() {
+    L_vol=$(amixer get Master | grep -o [0-9]*% | head -1 | grep -o [0-9]*)
+    R_vol=$(amixer get Master | grep -o [0-9]*% | tail -1 | grep -o [0-9]*)
+
+    echo $((($R_vol + $L_vol)/2))
+}
+
+volume_status() {
+    v=$(get_volume)
+
+    if [ $(amixer get Master | grep -o -m 1 off) ];
+    then
+        V_status='mut:'
+        V_col=$WMII_NORMCOLORS
+    else
+        V_status='VOL:'
+        if [ $v -gt 83 ];
+        then
+            V_col=$WMII_URGENTCOLORS
+        elif [ $v -ge 67 ];
+        then
+            V_col=$WMII_NOTICECOLORS
+        else
+            V_col=$WMII_FOCUSCOLORS
+        fi
+    fi
+
+    echo $V_col $V_status $v'%'
+}
+
+# WiFi status:
+vpn_status() {
+    if [ $(nmcli -t -f DEVICE,STATE dev status|grep ppp|grep -o connected) ];
+    then
+        echo " (VPN)"
+    else
+        echo ""
+    fi
+}
+
+wifi_quality() {
+    if [ $(nmcli -t -f ACTIVE,SIGNAL dev wifi|grep -o yes) ];
+    then
+        Q=$(nmcli -t -f ACTIVE,SIGNAL dev wifi|sed -n -E 's/yes:(.*)/\1/p')
+        echo $Q
+    else
+        echo "N/A"
+    fi
+}
+
+wifi_status() {
+    q=$(wifi_quality)
+    vpn=$(vpn_status)
+
+    if [ $q != "N/A" ];
+    then
+        if [ $q -gt 62 ];
+        then
+            W_col=$WMII_FOCUSCOLORS
+        elif [ $q -ge 24 ];
+        then
+            W_col=$WMII_NOTICECOLORS
+        else
+            W_col=$WMII_URGENTCOLORS
+        fi
+        echo $W_col 'WIFI: '$q'%' $vpn
+    else
+        W_col=$WMII_NORMCOLORS
+        echo $W_col 'WIFI: '$q $vpn
+    fi
+}
+
+# Ordinary status:
+status() {
+    echo -n $(uptime | sed 's/.*://; s/,//g') '|' $(date)
+}
+
+# Column Rules:
+wmiir write /colrules <<!
+/9/ -> 80+20+80
+/6/ -> 80+20 # Reconsider these?
+/1/ -> 50+50
+/.*/ -> 50+50 # Equipartioned
+!
+
+# Tagging Rules:
+wmiir write /tagrules <<!
+/.*Pidgin.*|.*skype.*|.*empathy.*/ -> 9
+/.*Iceweasel.*|.*Icedove.*|.*Firefox.*|.*Thunderbird.*/ -> 8
+/.*evince.*/ -> 7
+/.*OpenOffice.*|.*LibreOffice.*/ ->7
+/MPlayer|VLC/ -> 6
+/.*gimp.*/ -> 6
+/.*inkscape.*/ -> 6
+/.*/ -> sel
+/.*/ -> 1
+!
+
+# Locals Events, Actions etc.:
+local_events() {
+    cat <<'!'
+# Local Keybinds:
+KeyGroup Adio control
+Key XF86AudioLowerVolume
+    setsid amixer set Master -- 5%-
+Key XF86AudioRaiseVolume
+    setsid amixer set Master -- 5%+
+Key XF86AudioMute
+    setsid amixer set Master toggle
+    i=$(amixer get Master | grep -o -c -m 1 'off')
+    j=$(amixer get Headphone | grep -o -c -m 1 'off')
+    k=$(amixer get Speaker | grep -o -c -m 1 'off')
+    if [ $j != $i ];then
+        amixer set Headphone toggle
+    fi
+    if [ $k != $i ];then
+        amixer set Speaker toggle
+    fi
+
+KeyGroup Moving around
+Key $MODKEY-q
+    current=$(wmiir read /ctl|grep view|cut -d' ' -f2)
+    prev=$(wmiir ls /tag|grep -v sel|grep -B 1 $(wmiir read /ctl|grep view|cut -d' ' -f2)|head -n1|sed 's/\///')
+    if [ "$current" = "$prev" ];then
+        prev=$(wmiir ls /tag|grep -v sel|tail -n1|sed 's/\///')
+    fi
+    wmiir xwrite ctl/ view "$prev"
+Key $MODKEY-w
+    current=$(wmiir read /ctl|grep view|cut -d' ' -f2)
+    next=$(wmiir ls /tag|grep -v sel|grep -A 1 $(wmiir read /ctl|grep view|cut -d' ' -f2)|tail -n1|sed 's/\///')
+    if [ "$current" = "$next" ];then
+        next=$(wmiir ls /tag|grep -v sel|head -n1|sed 's/\///')
+    fi
+    wmiir xwrite ctl/ view "$next"
+
+# Local Actions:
+Action lock
+    gnome-screensaver-command --lock
+Action SHUTDOWN
+    shutdown
+Action reboot
+    reboot
+Action vpn
+    nmcli con up BahnhofLexVPN
+Action fix
+    feh --bg-fill ~/.wmii/bg_image &
+    xbindkeys
+    xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 1
+    xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2
+    xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
+    xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
+Action key_us
+    setxkbmap us -variant altgr-intl && xmodmap ~/.Xmodmaprc
+Action key_uk
+    setxkbmap gb && xmodmap ~/.Xmodmaprc
+Action key_se
+    setxkbmap se && xmodmap ~/.Xmodmaprc
+Action key_ck
+    setxkbmap gb -variant colemak
+Action key_dv
+    setxkbmap dvorak && xmodmap ~/.Xmodmaprc
+Action show_UK
+    eog ~/.wmii/key_UK.png &
+Action show_DV
+    eog ~/.wmii/key_dvorak.png &
+Action show_CK
+    eog ~/.wmii/key_colemak.png &
+Action status
+    set +xv
+
+    # Each new bar is created like status0:
+    if wmiir remove /rbar/status0 2>/dev/null; then
+        sleep 0.5
+    fi
+    echo "$WMII_NORMCOLORS" | wmiir create /rbar/status0
+
+    # status1:
+    if wmiir remove /rbar/status1 2>/dev/null; then
+        sleep 0.5
+    fi
+    echo "$WMII_NORMCOLORS" | wmiir create /rbar/status1
+
+    # status2:
+    if wmiir remove /rbar/status2 2>/dev/null; then
+        sleep 0.5
+    fi
+    echo "$WMII_NORMCOLORS" | wmiir create /rbar/status2
+
+    # status3:
+    if wmiir remove /rbar/status3 2>/dev/null; then
+        sleep 0.5
+    fi
+    echo "$WMII_NORMCOLORS" | wmiir create /rbar/status3
+
+    # Leftmost status bar (here: status 0) is put in the while
+    # loop's argument and assigned values there as before,
+    # the other bars are given values inside the loop:
+    while status | wmiir write /rbar/status0; do
+        volume_status | wmiir write /rbar/status1
+        wifi_status | wmiir write /rbar/status2
+        battery_status | wmiir write /rbar/status3
+        sleep 0.5
+    done
+
+# Local Events:
+Event UrgentTag
+    shift
+    wmiir xwrite "/lbar/$@" "$WMII_URGENTCOLORS" ">$@<"
+Event NotUrgentTag
+    shift
+    if [ $(wmiir read /client/sel/tags | grep -c -e "$@") -eq 1 ]; then
+        wmiir xwrite "/lbar/$@" "$WMII_FOCUSCOLORS $@"
+    else
+        wmiir xwrite "/lbar/$@" "$WMII_NORMCOLORS $@"
+    fi
+    unurgent "$@"
+Event FocusTag
+    wmiir xwrite "/lbar/$@" "$WMII_FOCUSCOLORS" "$@"
+    unurgent "$@"
+!
+}
+
+# Change menu key to compose key:
+setxkbmap -option "compose:menu"
+
+# Change capslock to extra Mod4:
+xmodmap ~/.Xmodmaprc
+
+# Fix mouse middle button:
+synclient TapButton1=1
+synclient VertTwoFingerScroll=1
+synclient HorizTwoFingerScroll=1
+# Actually, let's just disable the touch pad:
+synoff
+
+# Enable middle button scroll using TrackPoint:
+xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 1
+xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2
+xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
+xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
+
+# Initiate screensaver:
+gnome-screensaver &
+
+# Start xf.lux:
+xflux -l 57.7 -g 12.0
+
+# Add ~/bin/ to PATH:
+export PATH=$PATH:/home/skymandr/bin
+
+# Turn off slow-keys etc:
+xkbset -sl
+xkbset -a
+
+# Enable light changing fn buttons:
+xbindkeys
+
+# Set background:
+feh --bg-fill ~/.wmii/bg_image &

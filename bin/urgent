@@ -1,0 +1,16 @@
+#!/bin/bash
+
+EXPECTED_ARGS=1
+E_BADARGS=65
+if [ $# -lt $EXPECTED_ARGS ]; then
+    echo "Usage: `basename $0` {Window name}"
+    exit $E_BADARGS
+else
+    owins=$(wmiir ls /client | grep -v -e 'sel')
+    for owin in $owins; do
+        i=$(wmiir read /client/$owin/props | grep -c -e "$@")
+        if [ $i != 0 ]; then
+            wmiir xwrite /client/$owin/ctl Urgent on
+        fi
+    done
+fi
