@@ -1,0 +1,12 @@
+[Unit]
+Description=i3lock on suspend
+Before=sleep.target
+
+[Service]
+User=skymandr
+Type=forking
+Environment=DISPLAY=:0
+ExecStart=/home/skymandr/scripts/blurlock 0
+
+[Install]
+WantedBy=sleep.target
