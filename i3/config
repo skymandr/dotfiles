@@ -96,9 +96,9 @@ bindsym $mod+a focus parent
 set $workspace1 "1: Terminals "
 set $workspace2 "2: Browser "
 set $workspace3 "3: Mail "
-set $workspace3 "4: Office "
+set $workspace4 "4: Office "
 set $workspace5 "5: Random "
-set $workspace6 "6"
+set $workspace6 "6: Random "
 set $workspace8 "7: Draw "
 set $workspace8 "8: Film "
 set $workspace9 "9: Music "
@@ -189,7 +189,7 @@ bar {
         #                  border                background          text
         focused_workspace  $brdr-colour          $bg-colour          $txt-colour
         inactive_workspace $inactive-brdr-colour $inactive-bg-colour $inactive-txt-colour
-        urgent_workspace   $urgent-brdr-colour   $urgent-bg-colour   $urgent-txt-colour 
+        urgent_workspace   $urgent-brdr-colour   $urgent-bg-colour   $urgent-txt-colour
     }
 }
 
