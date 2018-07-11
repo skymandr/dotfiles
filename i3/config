@@ -207,25 +207,37 @@ bindsym XF86TouchpadToggle exec --no-startup-id exec /home/skymandr/scripts/togg
 # and turn touchpad off:
 exec_always synclient TouchpadOff=1
 
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
 # Lock screen:
 bindsym $mod+Shift+BackSpace exec /home/skymandr/scripts/blurlock
 
 # Set keyboard layouts and $mod+Space to switch:
-exec_always setxkbmap -layout gb,se -option grp:caps_toggle
-# when we want Colemak and have a way of showing layout in bar, use:
-# exec setxkbmap -layout gb,se,gb -variant colemak, -option grp:caps_toggle
+# exec_always setxkbmap -layout gb,se -option grp:caps_toggle
+exec setxkbmap -layout gb,se,gb -variant colemak, -option grp:caps_toggle
+
+# Show keyboard layout help:
+bindsym $mod+Shift+Tab exec /home/skymandr/scripts/kbhelp
 
 # Wallpaper:
 exec_always feh --bg-scale ~/Pictures/bg.jpg
 
+# Start RedShift:
+exec redshift -l 57.7:12.0
+
 # Startup applications:
-# exec pidgin
+exec pidgin
 exec firefox
 exec audacious
 
 # Floating by default:
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Arandr"] floating enable
+for_window [class="Xloadimage"] floating enable
 
 # Default workspaces:
 assign [class="Firefox"] $workspace2

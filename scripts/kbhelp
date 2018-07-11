@@ -1,0 +1,3 @@
+#! /bin/bash
+
+xview ~/scripts/kbimg/key_`xkb-switch -p`.png
