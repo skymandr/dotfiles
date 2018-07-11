@@ -213,7 +213,7 @@ bindsym XF86TouchpadToggle exec --no-startup-id exec $scripts/toggletouchpad
 exec_always synclient TouchpadOff=1
 
 # Media player controls
-bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
@@ -223,17 +223,21 @@ bindsym $mod+Shift+BackSpace exec $scripts/blurlock
 exec xautolock -time 6 -locker $scripts/blurlock 60
 
 # Set keyboard layouts and $mod+Space to switch:
-# exec_always setxkbmap -layout gb,se -option grp:caps_toggle
-exec_always setxkbmap -layout gb,se,gb -variant colemak, -option grp:caps_toggle
+exec_always setxkbmap -layout gb,se -option grp:caps_toggle
+# exec_always setxkbmap -layout gb,se,gb -variant colemak, -option grp:caps_toggle
+# exec_always xkb-switch -s gb
 
 # Show keyboard layout help:
-bindsym $mod+Shift+Tab exec $scripts/kbhelp
+bindsym $mod+Print exec $scripts/kbhelp
 
 # Wallpaper:
 exec_always feh --bg-scale ~/Pictures/bg.jpg
 
 # Start RedShift:
 exec redshift -l 57.7:12.0
+
+# Start compton:
+exec compton -f -D 5
 
 # Startup applications:
 exec pidgin
