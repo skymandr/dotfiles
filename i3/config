@@ -102,8 +102,8 @@ set $workspace2 "2: Browser "
 set $workspace3 "3: Mail "
 set $workspace4 "4: Office "
 set $workspace5 "5: Random "
-set $workspace6 "6: Random "
-set $workspace8 "7: Draw "
+set $workspace6 "6: Games "
+set $workspace7 "7: Draw "
 set $workspace8 "8: Film "
 set $workspace9 "9: Music "
 set $workspace10 "10: Chat "
@@ -250,6 +250,8 @@ assign [class="Firefox"] $workspace2
 assign [class="Chromium-browser"] $workspace2
 assign [class="libreoffice"] $workspace4
 assign [class="gimp-2.8"] $workspace7
+assign [class="Inkscape"] $workspace7
+assign [class="krita"] $workspace7
 assign [class="vlc"] $workspace8
 assign [class="Audacious"] $workspace9
 assign [class="Pidgin"] $workspace10
