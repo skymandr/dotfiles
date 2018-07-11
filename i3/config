@@ -224,7 +224,7 @@ exec xautolock -time 6 -locker $scripts/blurlock 60
 
 # Set keyboard layouts and $mod+Space to switch:
 # exec_always setxkbmap -layout gb,se -option grp:caps_toggle
-exec setxkbmap -layout gb,se,gb -variant colemak, -option grp:caps_toggle
+exec_always setxkbmap -layout gb,se,gb -variant colemak, -option grp:caps_toggle
 
 # Show keyboard layout help:
 bindsym $mod+Shift+Tab exec $scripts/kbhelp

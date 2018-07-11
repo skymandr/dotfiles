@@ -6,6 +6,7 @@ mogrify -blur 0x6 /tmp/screen_locked.png
 
 # Lock screen:
 i3lock -i /tmp/screen_locked.png  # Forks.
+xkb-switch -s gb
 
 # Wait ...
 if [ "$#" -eq 1 ]
