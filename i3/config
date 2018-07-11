@@ -115,7 +115,7 @@ set $bg-colour            #1d4000
 set $brdr-colour          #133700
 set $inactive-txt-colour  #a0a0a0
 set $inactive-bg-colour   #050f1a
-set $inactive-brdr-colour #001337
+set $inactive-brdr-colour #001764
 set $urgent-txt-colour    #deb1a0
 set $urgent-bg-colour     #840000
 set $urgent-brdr-colour   #2a0000
