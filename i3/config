@@ -92,7 +92,11 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-# Workspace aliases
+# "Environment variables":
+## Paths:
+set $scripts /home/skymandr/scripts
+
+## Workspace aliases:
 set $workspace1 "1: Terminals "
 set $workspace2 "2: Browser "
 set $workspace3 "3: Mail "
@@ -103,6 +107,19 @@ set $workspace8 "7: Draw "
 set $workspace8 "8: Film "
 set $workspace9 "9: Music "
 set $workspace10 "10: Chat "
+
+## Colours:
+set $txt-colour           #f1fdf4
+set $bg-colour            #1d4000
+set $brdr-colour          #133700
+set $inactive-txt-colour  #a0a0a0
+set $inactive-bg-colour   #050f1a
+set $inactive-brdr-colour #001337
+set $urgent-txt-colour    #deb1a0
+set $urgent-bg-colour     #840000
+set $urgent-brdr-colour   #2a0000
+set $ind-colour           #074088
+
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -160,18 +177,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Colours:
-set $txt-colour           #f1fdf4
-set $bg-colour            #1d4000
-set $brdr-colour          #133700
-set $inactive-txt-colour  #a0a0a0
-set $inactive-bg-colour   #050f1a
-set $inactive-brdr-colour #001337
-set $urgent-txt-colour    #deb1a0
-set $urgent-bg-colour     #840000
-set $urgent-brdr-colour   #2a0000
-set $ind-colour           #074088
-
 # Window colours:
 #                       border                background          text                 indicator
 client.focused          $brdr-colour          $bg-colour          $txt-colour          $ind-colour
@@ -203,7 +208,7 @@ bindsym XF86MonBrightnessUp exec --no-startup-id exec xbacklight -inc 20
 bindsym XF86MonBrightnessDown exec --no-startup-id exec xbacklight -dec 20
 
 # Touchpad controls
-bindsym XF86TouchpadToggle exec --no-startup-id exec /home/skymandr/scripts/toggletouchpad
+bindsym XF86TouchpadToggle exec --no-startup-id exec $scripts/toggletouchpad
 # and turn touchpad off:
 exec_always synclient TouchpadOff=1
 
@@ -214,14 +219,15 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # Lock screen:
-bindsym $mod+Shift+BackSpace exec /home/skymandr/scripts/blurlock
+bindsym $mod+Shift+BackSpace exec $scripts/blurlock
+exec xautolock -time 6 -locker $scripts/blurlock 60
 
 # Set keyboard layouts and $mod+Space to switch:
 # exec_always setxkbmap -layout gb,se -option grp:caps_toggle
 exec setxkbmap -layout gb,se,gb -variant colemak, -option grp:caps_toggle
 
 # Show keyboard layout help:
-bindsym $mod+Shift+Tab exec /home/skymandr/scripts/kbhelp
+bindsym $mod+Shift+Tab exec $scripts/kbhelp
 
 # Wallpaper:
 exec_always feh --bg-scale ~/Pictures/bg.jpg
