@@ -26,8 +26,8 @@ such a small task, but I couldn't get it to work any other way, and
 `xkb-switch` has a few other nice features.
 
 For the `blurlock` I did not use the `i3lock-fancy` package, since that didn't
-play well with suspending the machine on closing the lid.  Instead I adapted a
-script from @veikman; see the `scripts` folder in the root of this repository.
+play well with suspending the machine on closing the lid. Instead I adapted a
+script from @veikman; see the `scripts` folder.
 
 To get the media buttons to work I used `playerctl` by @acrisci
 (https://github.com/acrisci/playerctl).
