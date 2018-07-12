@@ -94,6 +94,7 @@ bindsym $mod+a focus parent
 
 # "Environment variables":
 ## Paths:
+set $scripts /home/skymandr
 set $scripts /home/skymandr/scripts
 set $i3config /home/skymandr/.config/i3
 
@@ -207,7 +208,7 @@ mode "move-workspace" {
 bindsym $mod+x mode "move-workspace"
 
 # Activate default screen setup:
-bindsym $mod+Shift+x exec xrandr --output eDP1 --primary --mode 1920x1080 --pos 2560x520 --output DP2 --mode 2560x1600 --pos 0x0
+bindsym $mod+Shift+x $home/.screenlayout/default.xrandr.sh
 
 # Window colours:
 #                       border                background          text                 indicator
