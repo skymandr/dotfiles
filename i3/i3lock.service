@@ -6,7 +6,7 @@ Before=sleep.target
 User=skymandr
 Type=forking
 Environment=DISPLAY=:0
-ExecStart=/home/skymandr/scripts/blurlock 0
+ExecStart=/home/skymandr/.config/i3/scripts/blurlock 0
 
 [Install]
 WantedBy=sleep.target
