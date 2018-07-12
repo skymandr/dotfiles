@@ -1,5 +1,5 @@
 Of these scripts only `kbhelp`, `blurlock` and `toggletouchpad` are currently in
-use, both om my `i3wm` setup. `blurlock` was adapted from an original script by
+use, both for my `i3wm` setup. `blurlock` was adapted from an original script by
 @veikman, and `toggletouchpad` was found here:
 https://faq.i3wm.org/question/3747/enabling-multimedia-keys.1.html .
 
