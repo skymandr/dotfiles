@@ -264,7 +264,7 @@ bindsym $mod+Print exec $scripts/kbhelp
 
 # Fix CapsLock:
 exec_always xmodmap -e "clear lock" #disable caps lock switch
-exec_always xmodmap -e "keysym Caps_Lock = Super_L" #set caps_lock as Meta
+exec_always xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as Escape
 
 # Wallpaper:
 exec_always feh --bg-scale ~/Pictures/bg.jpg
