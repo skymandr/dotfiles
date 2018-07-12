@@ -155,28 +155,59 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+   # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
+   # Pressing left will shrink the window’s width.
+   # Pressing right will grow the window’s width.
 
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+   bindsym h resize shrink width 10 px or 10 ppt
+   bindsym j resize grow height 10 px or 10 ppt
+   bindsym k resize shrink height 10 px or 10 ppt
+   bindsym l resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+   # same bindings, but for the arrow keys
+   bindsym Left resize shrink width 10 px or 10 ppt
+   bindsym Down resize grow height 10 px or 10 ppt
+   bindsym Up resize shrink height 10 px or 10 ppt
+   bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+   # back to normal: Enter or Escape
+   bindsym Return mode "default"
+   bindsym Escape mode "default"
+   bindsym q mode "default"
 }
 
 bindsym $mod+r mode "resize"
+
+# Handle multiple screens:
+# Move workspaces between screens
+mode "move-workspace" {
+   # These bindings trigger as soon as you enter the move-workspace mode
+
+   bindsym h move workspace to output left
+   bindsym j move workspace to output down
+   bindsym k move workspace to output up
+   bindsym l move workspace to output right
+
+   # same bindings, but for the arrow keys
+   bindsym Left move workspace to output left
+   bindsym Down move workspace to output down
+   bindsym Up move workspace to output up
+   bindsym Right move workspace to output right
+
+   # special moves
+   bindsym p move workspace to output primary
+
+   # back to normal: Enter or Escape
+   bindsym Return mode "default"
+   bindsym Escape mode "default"
+   bindsym q mode "default"
+}
+
+bindsym $mod+x mode "move-workspace"
+# Activate default screen setup:
+bindsym $mod+Shift+x exec xrandr --output eDP1 --primary --mode 1920x1080 --pos 2560x520 --output DP2 --mode 2560x1600 --pos 0x0
+
 
 # Window colours:
 #                       border                background          text                 indicator
