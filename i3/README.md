@@ -3,6 +3,7 @@
 - `fonts-font-awesome` (for `i3bar` icons; see https://fontawesome.com/cheatsheet)
 - `xautolock` (cheap "screen saver")
 - `i3blocks` (nicer `i3bar`)
+- `i3lock` (used to lock screen)
 - `imagemagick` (very good set of tools, used here for `blurlock`)
 - `scrot` (screenshot tool, used for `blurlock`)
 - `lm-sensors` (for temperature readings)
@@ -10,6 +11,7 @@
 - `xserver-xorg-input-synaptics` (for turning off touch pad)
 - `xbacklight` (for controlling the screen backlight)
 - `redshift` (alternative to `xflux` - makes screen comfier at night)
+- `xloadimage` (for showing the keyboard layout help)
 
 and of course `i3wm` (https://i3wm.org).
 
@@ -23,7 +25,10 @@ https://arkandis.tuxfamily.org/) and `*-gtk-theme`, which I configured using
 For getting the `xkb` state I installed `xkb-switch` by @ierton
 (https://github.com/ierton/xkb-switch) (this feels a bit circumlocuitous for
 such a small task, but I couldn't get it to work any other way, and
-`xkb-switch` has a few other nice features.
+`xkb-switch` has a few other nice features. I use `xkb-switch` to get the
+state for the `i3bar` and in `kbhelp` to know which help to show, and in
+`blurlock` I use `xkb-switch` to set the keyboard layout to something
+predictable when locking.
 
 For the `blurlock` I did not use the `i3lock-fancy` package, since that didn't
 play well with suspending the machine on closing the lid. Instead I adapted a
