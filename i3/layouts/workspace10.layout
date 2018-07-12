@@ -1,0 +1,21 @@
+{
+    "percent": 0.2,
+    "swallows": [
+       {
+         "class": "^Pidgin$",
+         "window_role": "^buddy_list$"
+       }
+    ],
+    "type": "con"
+}
+
+{
+    "percent": 0.8,
+    "swallows": [
+       {
+        "class": "^Pidgin$",
+        "window_role": "^conversation$"
+       }
+    ],
+    "type": "con"
+}
