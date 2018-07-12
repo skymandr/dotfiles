@@ -1,4 +1,4 @@
-=Some requirements to install using e.g. `apt`=
+### Some requirements to install using e.g. `apt`:
 - `compton` (nicer rendering and transitions, without it I got font errors)
 - `fonts-font-awesome` (for `i3bar` icons; see https://fontawesome.com/cheatsheet)
 - `xautolock` (cheap "screen saver")
@@ -19,7 +19,7 @@ For easier `xrandr` navigation, I installed `arandr`.
 https://arkandis.tuxfamily.org/) and `*-gtk-theme`, which I configured using
 `lxappearance`.)
 
-=Other dependencies=
+### Other dependencies:
 For getting the `xkb` state I installed `xkb-switch` by @ierton
 (https://github.com/ierton/xkb-switch) (this feels a bit circumlocuitous for
 such a small task, but I couldn't get it to work any other way, and
