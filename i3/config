@@ -95,8 +95,9 @@ bindsym $mod+a focus parent
 # "Environment variables":
 ## Paths:
 set $scripts /home/skymandr
-set $scripts /home/skymandr/scripts
 set $i3config /home/skymandr/.config/i3
+set $scripts /home/skymandr/.config/i3/scripts
+set $layouts /home/skymandr/.config/i3/layouts
 
 ## Workspace aliases:
 set $workspace1 "1: Terminals "
@@ -280,6 +281,7 @@ exec compton -f -D 5
 exec pidgin
 exec iceweasel
 exec audacious
+exec i3-sensible-terminal
 
 # Floating by default:
 for_window [class="Pavucontrol"] floating enable
@@ -290,9 +292,10 @@ for_window [class="Xloadimage"] floating enable
 assign [class="Firefox"] $workspace2
 assign [class="Chromium-browser"] $workspace2
 assign [class="libreoffice"] $workspace4
-assign [class="gimp-2.8"] $workspace7
+assign [class="Gimp*"] $workspace7
 assign [class="Inkscape"] $workspace7
 assign [class="krita"] $workspace7
 assign [class="vlc"] $workspace8
 assign [class="Audacious"] $workspace9
 assign [class="Pidgin"] $workspace10
+assign [class="Skype"] $workspace10
