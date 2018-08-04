@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Ikarius ADF Std Bold 12
+font pango: Ikarius ADF Std Bold 12
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -94,7 +94,7 @@ bindsym $mod+a focus parent
 
 # "Environment variables":
 ## Paths:
-set $scripts /home/skymandr
+set $home /home/skymandr
 set $i3config /home/skymandr/.config/i3
 set $scripts /home/skymandr/.config/i3/scripts
 set $layouts /home/skymandr/.config/i3/layouts
@@ -184,32 +184,43 @@ bindsym $mod+r mode "resize"
 # Handle multiple screens:
 # Move workspaces between screens
 mode "move-workspace" {
-   # These bindings trigger as soon as you enter the move-workspace mode
+    # These bindings trigger as soon as you enter the move-workspace mode
+    bindsym h move workspace to output left
+    bindsym j move workspace to output down
+    bindsym k move workspace to output up
+    bindsym l move workspace to output right
 
-   bindsym h move workspace to output left
-   bindsym j move workspace to output down
-   bindsym k move workspace to output up
-   bindsym l move workspace to output right
+    # same bindings, but for the arrow keys
+    bindsym Left move workspace to output left
+    bindsym Down move workspace to output down
+    bindsym Up move workspace to output up
+    bindsym Right move workspace to output right
 
-   # same bindings, but for the arrow keys
-   bindsym Left move workspace to output left
-   bindsym Down move workspace to output down
-   bindsym Up move workspace to output up
-   bindsym Right move workspace to output right
+    # special moves
+    bindsym p move workspace to output primary
 
-   # special moves
-   bindsym p move workspace to output primary
+    # jump between workspaces
+    bindsym $mod+1 workspace $workspace1
+    bindsym $mod+2 workspace $workspace2
+    bindsym $mod+3 workspace $workspace3
+    bindsym $mod+4 workspace $workspace4
+    bindsym $mod+5 workspace $workspace5
+    bindsym $mod+6 workspace $workspace6
+    bindsym $mod+7 workspace $workspace7
+    bindsym $mod+8 workspace $workspace8
+    bindsym $mod+9 workspace $workspace9
+    bindsym $mod+0 workspace $workspace10
 
-   # back to normal: Enter or Escape
-   bindsym Return mode "default"
-   bindsym Escape mode "default"
-   bindsym q mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym q mode "default"
 }
 
 bindsym $mod+x mode "move-workspace"
 
 # Activate default screen setup:
-bindsym $mod+Shift+x $home/.screenlayout/default.xrandr.sh
+bindsym $mod+Shift+x exec $home/.screenlayout/default.xrandr.sh
 
 # Window colours:
 #                       border                background          text                 indicator
@@ -222,6 +233,8 @@ client.urgent           $urgent-brdr-colour   $urgent-bg-colour   $txt-colour   
 # finds out, if available)
 bar {
     status_command i3blocks -c $i3config/i3blocks.conf
+    font pango: Ikarius ADF Std Bold 12, Font Awesome Bold 11
+    position top
     colors {
         background $inactive-bg-colour
         separator  $inactive-brdr-colour
@@ -254,6 +267,7 @@ bindsym XF86AudioPrev exec playerctl previous
 
 # Lock screen:
 bindsym $mod+Shift+BackSpace exec $scripts/blurlock
+bindsym $mod+Shift+Delete exec systemctl suspend && $scripts/blurlock
 exec_always xautolock -time 6 -locker $scripts/blurlock
 
 # Set keyboard layouts and $mod+Space to switch:
@@ -265,8 +279,9 @@ exec_always setxkbmap -layout gb,se -option grp:shifts_toggle
 bindsym $mod+Print exec $scripts/kbhelp
 
 # Fix CapsLock:
-exec_always xmodmap -e "clear lock" #disable caps lock switch
-exec_always xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as Escape
+# exec_always xmodmap -e "clear Lock" #disable caps lock switch
+# exec_always xmodmap -e "keysym Caps_Lock = Return" #set caps_lock as Return
+exec_always xmodmap $home/.Xmodmaprc
 
 # Wallpaper:
 exec_always feh --bg-scale ~/Pictures/bg.jpg
@@ -279,6 +294,8 @@ exec compton -f -D 5
 
 # Startup applications:
 exec pidgin
+exec icedove
+exec iceweasel
 exec iceweasel
 exec audacious
 exec i3-sensible-terminal
@@ -291,7 +308,12 @@ for_window [class="Xloadimage"] floating enable
 # Default workspaces:
 assign [class="Firefox"] $workspace2
 assign [class="Chromium-browser"] $workspace2
+assign [class="Chromium"] $workspace2
+assign [class="qutebrowser"] $workspace2
+assign [class="Mail"] $workspace3
+assign [class="Thunderbird"] $workspace3
 assign [class="libreoffice"] $workspace4
+assign [class="libreoffice-writer"] $workspace4
 assign [class="Gimp*"] $workspace7
 assign [class="Inkscape"] $workspace7
 assign [class="krita"] $workspace7
