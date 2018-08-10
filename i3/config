@@ -281,7 +281,8 @@ bindsym $mod+Print exec $scripts/kbhelp
 # Fix CapsLock:
 # exec_always xmodmap -e "clear Lock" #disable caps lock switch
 # exec_always xmodmap -e "keysym Caps_Lock = Return" #set caps_lock as Return
-exec_always xmodmap $home/.Xmodmaprc
+# exec_always xmodmap $home/.Xmodmaprc
+exec_always $scripts/fix_caps
 
 # Wallpaper:
 exec_always feh --bg-scale ~/Pictures/bg.jpg

@@ -1,3 +1,3 @@
 remove Lock = Caps_Lock
-keysym Caps_Lock = Return
+keysym Caps_Lock = BackSpace
 clear Lock
