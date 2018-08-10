@@ -297,7 +297,6 @@ exec compton -f -D 5
 exec pidgin
 exec icedove
 exec iceweasel
-exec iceweasel
 exec audacious
 exec i3-sensible-terminal
 
