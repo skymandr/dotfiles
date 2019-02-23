@@ -100,7 +100,7 @@ set $scripts /home/skymandr/.config/i3/scripts
 set $layouts /home/skymandr/.config/i3/layouts
 
 ## Workspace aliases:
-set $workspace1 "1: Terminals "
+set $workspace1 "1: Term "
 set $workspace2 "2: Browser "
 set $workspace3 "3: Mail "
 set $workspace4 "4: Office "
