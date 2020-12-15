@@ -268,11 +268,11 @@ bindsym XF86AudioPrev exec playerctl previous
 # Lock screen:
 bindsym $mod+Shift+BackSpace exec $scripts/blurlock
 bindsym $mod+Shift+Delete exec systemctl suspend && $scripts/blurlock
-exec_always xautolock -time 6 -locker $scripts/blurlock
+# exec_always xautolock -time 6 -locker $scripts/blurlock
 
 # Set keyboard layouts and $mod+Space to switch:
-exec_always setxkbmap -layout gb,se -option grp:shifts_toggle
-# exec_always setxkbmap -layout gb,se,gb -variant ,,colemak -option grp:shifts_toggle
+# exec_always setxkbmap -layout gb,se -option grp:alt_space_toggle
+exec_always setxkbmap -layout gb,gb -variant ,colemak -option grp:shifts_toggle
 # exec_always xkb-switch -s gb
 
 # Show keyboard layout help:
@@ -317,6 +317,7 @@ assign [class="libreoffice-writer"] $workspace4
 assign [class="Gimp*"] $workspace7
 assign [class="Inkscape"] $workspace7
 assign [class="krita"] $workspace7
+assign [class="gov-nasa-giss-projector-GProjector"] $workspace7
 assign [class="vlc"] $workspace8
 assign [class="Audacious"] $workspace9
 assign [class="Pidgin"] $workspace10

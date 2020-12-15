@@ -8,6 +8,7 @@ mogrify -blur 0x21 /tmp/screen_locked.png
 i3lock -i /tmp/screen_locked.png  # Forks.
 xkb-switch -s se
 setxkbmap -layout gb,se -option grp:shifts_toggle
+~/.config/i3/scripts/fix_caps
 
 # Wait ...
 if [ "$#" -eq 1 ]

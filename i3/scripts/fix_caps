@@ -1,15 +1,24 @@
 #! /bin/bash
 
 fix_caps() {
-    if xmodmap | grep --quiet Caps_Lock
+    if xset -q | grep --quiet "Caps Lock: *on"
     then
-        xmodmap -e "clear Lock"
-        xmodmap -e "keysym Caps_Lock = BackSpace"
-        if [ $1 -gt 0 ]
-        then
-            fix_caps $(( $1 - 1))
-        fi
+        xdotool key Caps_Lock
     fi
+
+#     if xmodmap | grep --quiet Caps_Lock
+#     then
+#         xmodmap -e "clear Lock"
+#         xmodmap -e "keysym Caps_Lock = BackSpace"
+#         if [ $1 -gt 0 ]
+#         then
+#             fix_caps $(( $1 - 1))
+#         fi
+#     fi
 }
 
-fix_caps 10
+fix_caps  # 10
+setxkbmap -layout gb,gb -variant ,colemak -option grp:shifts_toggle
+xmodmap -e "remove Lock = Caps_Lock"
+xset r 66
+
