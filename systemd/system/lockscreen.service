@@ -1,0 +1,13 @@
+# From https://www.reddit.com/r/i3wm/comments/5g86f1/suspend_on_lid_close/
+[Unit]
+Description=User suspend actions
+Before=sleep.target
+
+[Service]
+User=skymandr
+Type=forking
+Environment=DISPLAY=:0
+ExecStart=/home/skymandr/.config/i3/scripts/blurlock
+
+[Install]
+WantedBy=sleep.target

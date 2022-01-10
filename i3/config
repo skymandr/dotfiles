@@ -100,16 +100,16 @@ set $scripts /home/skymandr/.config/i3/scripts
 set $layouts /home/skymandr/.config/i3/layouts
 
 ## Workspace aliases:
-set $workspace1 "1: Term "
-set $workspace2 "2: Browser "
-set $workspace3 "3: Mail "
-set $workspace4 "4: Office "
-set $workspace5 "5: Random "
-set $workspace6 "6: Games "
-set $workspace7 "7: Draw "
-set $workspace8 "8: Film "
-set $workspace9 "9: Music "
-set $workspace10 "10: Chat "
+set $workspace1 "1: "
+set $workspace2 "2: "
+set $workspace3 "3: "
+set $workspace4 "4: "
+set $workspace5 "5: "
+set $workspace6 "6: "
+set $workspace7 "7: "
+set $workspace8 "8: "
+set $workspace9 "9: "
+set $workspace10 "10: "
 
 ## Colours:
 set $txt-colour           #f1fdf4
@@ -246,18 +246,20 @@ bar {
 }
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 3 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 3 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 3 toggle
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id exec xbacklight -inc 20
-bindsym XF86MonBrightnessDown exec --no-startup-id exec xbacklight -dec 20
+# bindsym XF86MonBrightnessUp exec --no-startup-id exec xbacklight -inc 20
+# bindsym XF86MonBrightnessDown exec --no-startup-id exec xbacklight -dec 20
+bindsym XF86MonBrightnessUp exec light -A 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec light -U 10 # decrease screen brightness
 
 # Touchpad controls
 bindsym XF86TouchpadToggle exec --no-startup-id exec $scripts/toggletouchpad
 # and turn touchpad off:
-exec_always synclient TouchpadOff=1
+# exec_always synclient TouchpadOff=1
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play-pause
@@ -272,7 +274,7 @@ bindsym $mod+Shift+Delete exec systemctl suspend && $scripts/blurlock
 
 # Set keyboard layouts and $mod+Space to switch:
 # exec_always setxkbmap -layout gb,se -option grp:alt_space_toggle
-exec_always setxkbmap -layout gb,gb -variant ,colemak -option grp:shifts_toggle
+# exec_always setxkbmap -layout gb,gb -variant ,colemak -option grp:shifts_toggle
 # exec_always xkb-switch -s gb
 
 # Show keyboard layout help:
@@ -282,13 +284,13 @@ bindsym $mod+Print exec $scripts/kbhelp
 # exec_always xmodmap -e "clear Lock" #disable caps lock switch
 # exec_always xmodmap -e "keysym Caps_Lock = Return" #set caps_lock as Return
 # exec_always xmodmap $home/.Xmodmaprc
-exec_always $scripts/fix_caps
+# exec_always $scripts/fix_caps
 
 # Wallpaper:
 exec_always feh --bg-scale ~/Pictures/bg.jpg
 
 # Start RedShift:
-exec redshift -l 57.7:12.0
+# exec redshift -l 57.7:12.0
 
 # Start compton:
 exec compton -f -D 5

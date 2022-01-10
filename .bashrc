@@ -110,6 +110,8 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 export WORKON_HOME="~/.virtualenv"
-export PATH=$PATH":/home/skymandr/bin:."
+export PATH=$PATH":/home/skymandr/.local/bin:/home/skymandr/bin:."
 
 set -o vi
+
+curl cy.wttr.in/Gothenburg?MnF
