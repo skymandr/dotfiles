@@ -246,18 +246,21 @@ bar {
 }
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 3 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 3 -5%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 3 toggle
+# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 3 +5%
+# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 3 -5%
+# bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 3 toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id $scripts/volume_up
+bindsym XF86AudioLowerVolume exec --no-startup-id $scripts/volume_down
+bindsym XF86AudioMute exec --no-startup-id $scripts/volume_mute
 
 # Screen brightness controls
 # bindsym XF86MonBrightnessUp exec --no-startup-id exec xbacklight -inc 20
 # bindsym XF86MonBrightnessDown exec --no-startup-id exec xbacklight -dec 20
-bindsym XF86MonBrightnessUp exec light -A 10 # increase screen brightness
+bindsym XF86MonBrightnessUp exec light -A 10   # increase screen brightness
 bindsym XF86MonBrightnessDown exec light -U 10 # decrease screen brightness
 
 # Touchpad controls
-bindsym XF86TouchpadToggle exec --no-startup-id exec $scripts/toggletouchpad
+# bindsym XF86TouchpadToggle exec --no-startup-id $scripts/toggletouchpad
 # and turn touchpad off:
 # exec_always synclient TouchpadOff=1
 
@@ -290,7 +293,7 @@ bindsym $mod+Print exec $scripts/kbhelp
 exec_always feh --bg-scale ~/Pictures/bg.jpg
 
 # Start RedShift:
-# exec redshift -l 57.7:12.0
+exec redshift -l 57.7:12.0
 
 # Start compton:
 exec compton -f -D 5

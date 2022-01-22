@@ -1,0 +1,6 @@
+#! /bin/sh
+# Note! This needs to be in the path!
+
+set eu
+
+pactl list short sinks | grep -e `pactl info|grep "Default Sink"|sed -r s/'[A-Za-z ]+: '//`|sed -r s/'[A-Za-z ].*'//

@@ -1,0 +1,6 @@
+#! /bin/sh
+# Note! get_default_pa_sink needs to be in path!
+
+set eu
+
+pactl set-sink-volume `get_default_pa_sink` +5%
